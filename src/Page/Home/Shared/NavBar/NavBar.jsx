@@ -1,64 +1,67 @@
-import React, { useContext, useState } from 'react'
-import { Link } from 'react-router-dom';
-import { AuthContext } from '../../../../contextProvider/AuthProvider';
+import React, { useContext, useState } from "react";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../../../contextProvider/AuthProvider";
 import { IoCartSharp } from "react-icons/io5";
-import useAxiosSecure from '../../../../hooks/useAxiosSecure';
-import useCart from '../../../../hooks/useCart';
-
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import useCart from "../../../../hooks/useCart";
 
 function NavBar() {
   const { user, logout } = useContext(AuthContext);
-//   const[cart,setCart]=useState([])
-//   const axiosSecure =useAxiosSecure()
-//  axiosSecure.get(`/carts?email=${user?.email}`) 
-//     .then(res => {
-//     setCart(res.data)
-//     })
-  const [cart]=useCart()
+  //   const[cart,setCart]=useState([])
+  //   const axiosSecure =useAxiosSecure()
+  //  axiosSecure.get(`/carts?email=${user?.email}`)
+  //     .then(res => {
+  //     setCart(res.data)
+  //     })
+  const [cart] = useCart();
   const handleLogOut = () => {
     logout()
       .then(() => {
         // Sign-out successful.
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error);
       });
-  }
-    const navOption = (
-      <>
-        <li>
-          <Link to={"/"}>Home</Link>
-        </li>
-        <li>
-          <Link to={"/menu"}>Menu</Link>
-        </li>
-        <li>
-          <Link to={"/order/salad"}>Order Food</Link>
-        </li>
-        <li>
-          <Link to={"secure"}>Secure</Link>
-        </li>
-        <button className="btn">
-          <IoCartSharp />
-          <div className="badge badge-secondary">+{ cart.length}</div>
-        </button>
-        {user ? (
-          <>
-            {/* <img className='w-[50px] h-[50px]' src={user?.photoURL}></img> */}
+  };
+  const navOption = (
+    <>
+      <li>
+        <Link to={"/"}>Home</Link>
+      </li>
+      <li>
+        <Link to={"/menu"}>Menu</Link>
+      </li>
+      <li>
+        <Link to={"/order/salad"}>Order Food</Link>
+      </li>
+      <li>
+        <Link to={"secure"}>Secure</Link>
+      </li>
+      <li>
+        <Link to="dashboard/cart">
+          <button className="btn">
+            <IoCartSharp />
+            <div className="badge badge-secondary">+{cart.length}</div>
+          </button>
+        </Link>
+      </li>
+      {user ? (
+        <>
+          {/* <img className='w-[50px] h-[50px]' src={user?.photoURL}></img> */}
 
-            <button onClick={handleLogOut} className="btn btn-active btn-ghost">
-              LogOut
-            </button>
-            <span>{user?.displayName}</span>
-          </>
-        ) : (
-          <>
-            <Link to={"/login"}>Login</Link>
-          </>
-        )}
-      </>
-    );
-    
+          <button onClick={handleLogOut} className="btn btn-active btn-ghost">
+            LogOut
+          </button>
+          <span>{user?.displayName}</span>
+        </>
+      ) : (
+        <>
+          <Link to={"/login"}>Login</Link>
+        </>
+      )}
+    </>
+  );
+
   return (
     <>
       <div className="navbar fixed z-10 bg-opacity-30 text-white bg-black max-w-screen-xl">
@@ -71,7 +74,7 @@ function NavBar() {
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
-              > 
+              >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -100,4 +103,4 @@ function NavBar() {
   );
 }
 
-export default NavBar
+export default NavBar;

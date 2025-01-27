@@ -8,6 +8,8 @@ import SignUp from "../Page/SignUP/SignUp";
 import Secure from "../Page/Secure/Secure";
 import PrivateRouter from "./PrivateRouter";
 import LoadingComponent from "../Page/Home/Shared/Loading/Loading";
+import Dashboard from "../LayOut/Dashboard";
+import Cart from "../Page/Dashboard/Cart/Cart";
 
  export const router = createBrowserRouter([
   {
@@ -40,5 +42,15 @@ import LoadingComponent from "../Page/Home/Shared/Loading/Loading";
              element:<PrivateRouter><Secure/></PrivateRouter>
            }
     ]
-  },
+   },
+   {
+     path: "dashboard",
+     element: <Dashboard />,
+     children: [
+       {
+         path: "cart",
+         element:<Cart/>
+       }
+     ]
+   }
 ]);
