@@ -7,6 +7,7 @@ import useCart from "../../../../hooks/useCart";
 
 function NavBar() {
   const { user, logout } = useContext(AuthContext);
+ 
   //   const[cart,setCart]=useState([])
   //   const axiosSecure =useAxiosSecure()
   //  axiosSecure.get(`/carts?email=${user?.email}`)

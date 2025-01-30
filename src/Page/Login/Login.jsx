@@ -9,6 +9,8 @@ import { AuthContext } from "../../contextProvider/AuthProvider";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { toast } from "sonner";
+import SocialLogin from "../../components/SocialLogin/SocialLogin";
+
 function Login() {
 
 const [disable,setDisable]=useState(true)
@@ -17,7 +19,7 @@ const [disable,setDisable]=useState(true)
   const location = useLocation()
   const from = location.state?.from?.pathname || "/"
   console.log(from)
-  
+
 const { SignIn } = useContext(AuthContext);
 
   const handleLogin = event => {
@@ -136,6 +138,7 @@ const { SignIn } = useContext(AuthContext);
                 Create a new account
               </Link>
             </p>
+            <SocialLogin/>
           </div>
         </div>
       </div>

@@ -10,47 +10,60 @@ import PrivateRouter from "./PrivateRouter";
 import LoadingComponent from "../Page/Home/Shared/Loading/Loading";
 import Dashboard from "../LayOut/Dashboard";
 import Cart from "../Page/Dashboard/Cart/Cart";
+import AllUsers from "../Page/Dashboard/AllUsers/AllUsers";
 
  export const router = createBrowserRouter([
-  {
-    path: "/",
-         element: <Main />,
-         children: [
-             {
-                 path: "/",
-                 element:<Home/>
-           },
-           {
-             path: 'menu',
-             element:<Menu/>
-           },
-           {
-             path: 'order/:category',
-             element:<OrderFood/>
-           },
-           {
-             path: 'login',
-             element:<Login/>
-           },
-           {
-             path: 'signup',
-             element:<SignUp/>
-           },
-          
-           {
-             path: 'secure',
-             element:<PrivateRouter><Secure/></PrivateRouter>
-           }
-    ]
+   {
+     path: "/",
+     element: <Main />,
+     children: [
+       {
+         path: "/",
+         element: <Home />,
+       },
+       {
+         path: "menu",
+         element: <Menu />,
+       },
+       {
+         path: "order/:category",
+         element: <OrderFood />,
+       },
+       {
+         path: "login",
+         element: <Login />,
+       },
+       {
+         path: "signup",
+         element: <SignUp />,
+       },
+
+       {
+         path: "secure",
+         element: (
+           <PrivateRouter>
+             <Secure />
+           </PrivateRouter>
+         ),
+       },
+     ],
    },
    {
      path: "dashboard",
-     element: <Dashboard />,
+     element: (
+       <PrivateRouter>
+         <Dashboard />
+       </PrivateRouter>
+     ),
      children: [
        {
          path: "cart",
-         element:<Cart/>
-       }
-     ]
-   }
-]);
+         element: <Cart />,
+       },
+       {
+         path: "users",
+         element: <AllUsers />,
+       },
+     ],
+   },
+ ]);

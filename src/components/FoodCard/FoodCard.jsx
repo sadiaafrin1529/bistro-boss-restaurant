@@ -26,8 +26,9 @@ function FoodCard({ item }) {
         console.log(res.data);
       });
       toast.success(`${item?.name} added`)
-//refetch cart to update the cart items
       refetch()
+//refetch cart to update the cart items
+      
 
       
     } else {

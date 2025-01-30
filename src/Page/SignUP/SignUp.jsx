@@ -4,64 +4,63 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "../../contextProvider/AuthProvider";
 import { toast } from "sonner";
 import { Link, useNavigate } from "react-router-dom";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import SocialLogin from "../../components/SocialLogin/SocialLogin";
 
-export default function SignUp() {
+ function SignUp() {
+  const { createUser, ProfileUpdate, logout } = useContext(AuthContext);
 
+  const navigate = useNavigate();
+  const axiosPublic= useAxiosPublic()
 
-const { createUser, ProfileUpdate, logout } = useContext(AuthContext);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+   } = useForm();
+   
 
-const navigate=useNavigate()
-
-
-
-
-
-
-
-
-
-  const {register,handleSubmit,reset   ,formState: { errors },} = useForm();
   const onSubmit = (data) => {
-    console.log(data)
+    console.log(data);
 
-    createUser(data.email, data.password)
-      .then((result) => {
-        // Signed up
-        // console.log(result)
-        const LoggesUser = result.user; 
-        // console.log(LoggesUser);
-        ProfileUpdate(data.name, data.photoURL)
-          .then(() => {
-            console.log('user profile Update')
-            reset;
-            toast.success("Successfully Signed Up");
-             logout().then(() => {
-               // Sign-out successful.
-               navigate("/login")
-             });
+    createUser(data.email, data.password).then((result) => {
+      // Signed up
+      // console.log(result)
+      const LoggesUser = result.user;
+      // console.log(LoggesUser);
+      ProfileUpdate(data.name, data.photoURL)
+        .then(() => {
+          console.log("user profile Update");
+          const userInfo = {
+            email: data?.email,
+            name:data.name
+          }
+
+          axiosPublic.post("/users", userInfo)
+            .then(res => {
+              console.log(res.data)
+              if (res.data.insertedId) {
+                reset;
+                toast.success("Successfully Signed Up");
+                logout().then(() => {
+                  // Sign-out successful.
+                  navigate("/login");
+                });
+              }
+            
           })
-          .catch((error) => {
-            // console.error(error);
-            toast.error(error);
-          });
-       
+
+          
+        })
+        .catch((error) => {
+          // console.error(error);
+          toast.error(error);
+        });
+
       // ...
-      })
-      
-    
-    
-    
-    
-    
+    });
   };
-
-
-
-
-
-
-
-
 
   return (
     <div>
@@ -168,9 +167,11 @@ const navigate=useNavigate()
                 Click here
               </Link>
             </p>
+            <SocialLogin />
           </div>
         </div>
       </div>
     </div>
   );
 }
+export default SignUp
